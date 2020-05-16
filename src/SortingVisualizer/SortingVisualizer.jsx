@@ -100,28 +100,40 @@ export default class SortingVisualizer extends React.Component {
     const animations = getBubbleSortAnimations(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
-      const [barOneIdx, barTwoIdx, barOneHt, barTwoHt] = animations[i];
+      const [barOneIdx, barTwoIdx, barOneHt, barTwoHt, isSwap] = animations[i];
       const barOneStyle = arrayBars[barOneIdx].style;
       const barTwoStyle = arrayBars[barTwoIdx].style;
-      setTimeout(() => {
-        barOneStyle.backgroundColor = 'yellow';
-        barTwoStyle.backgroundColor = 'pink';
-        barOneStyle.height = `${barTwoHt}px`;
-        barTwoStyle.height = `${barOneHt}px`;
-      }, i * ANIMATION_SPEED_MS)
 
-      setTimeout(() => {
-        barOneStyle.backgroundColor = 'aqua';
-        barTwoStyle.backgroundColor = 'aqua';
-        arrayBars[this.state.array.length - i - 1].style.backgroundColor = "red"
+      const color = i % 2 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
 
-        //trying to change color of last(sorted) elements to red
-        // if (i < this.state.array.length) {
-        //   // console.log(this.state.array.length - i - 1)
-        //   // arrayBars[this.state.array.length - i - 1].style.backgroundColor = "red"
-        // }
+      if (isSwap === 0) {
+        setTimeout(() => {
+          barOneStyle.backgroundColor = 'yellow';
+          barTwoStyle.backgroundColor = 'yellow';
+        }, i * ANIMATION_SPEED_MS)
+      }
+      else {
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+          barOneStyle.height = `${barTwoHt}px`;
+          barTwoStyle.height = `${barOneHt}px`;
+        }, i * ANIMATION_SPEED_MS)
+      }
 
-      }, i * ANIMATION_SPEED_MS)
+
+      // setTimeout(() => {
+      //   barOneStyle.backgroundColor = 'aqua';
+      //   barTwoStyle.backgroundColor = 'aqua';
+      //   arrayBars[this.state.array.length - i - 1].style.backgroundColor = "red"
+
+      //   //trying to change color of last(sorted) elements to red
+      //   // if (i < this.state.array.length) {
+      //   //   // console.log(this.state.array.length - i - 1)
+      //   //   // arrayBars[this.state.array.length - i - 1].style.backgroundColor = "red"
+      //   // }
+
+      // }, i * ANIMATION_SPEED_MS)
     }
   }
 
