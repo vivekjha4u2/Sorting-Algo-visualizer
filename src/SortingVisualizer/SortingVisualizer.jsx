@@ -5,8 +5,9 @@ import './SortingVisualizer.css';
 import { getSelectionSortAnimations } from '../sortingAlgorithms/SelectionSort.js';
 import { Nav, Navbar } from 'react-bootstrap'
 
-const ANIMATION_SPEED_MS = 1;
-const NUMBER_OF_ARRAY_BARS = 230;
+const ANIMATION_SPEED_MS = 500;
+const NUMBER_OF_ARRAY_BARS = 50;
+//230
 const PRIMARY_COLOR = 'aqua';
 const SECONDARY_COLOR = 'red';
 
@@ -98,26 +99,37 @@ export default class SortingVisualizer extends React.Component {
 
   bubbleSort() {
     const animations = getBubbleSortAnimations(this.state.array);
+
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
+      // console.log(i + " " + animations.length);
       const [barOneIdx, barTwoIdx, barOneHt, barTwoHt, isSwap] = animations[i];
       const barOneStyle = arrayBars[barOneIdx].style;
       const barTwoStyle = arrayBars[barTwoIdx].style;
 
-      const color = i % 2 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+      //last sorted elem color to green
+      // i === this.state.array.length - decrement 1
+      // 50 49 
 
-      if (isSwap === 0) {
+      if (i % 2 !== 0) {
+        setTimeout(() => {
+          barOneStyle.backgroundColor = PRIMARY_COLOR;
+          barTwoStyle.backgroundColor = PRIMARY_COLOR;
+        }, i * ANIMATION_SPEED_MS)
+      }
+      else if (isSwap === 0) {
         setTimeout(() => {
           barOneStyle.backgroundColor = 'yellow';
           barTwoStyle.backgroundColor = 'yellow';
         }, i * ANIMATION_SPEED_MS)
       }
-      else {
+      else if (isSwap === 1) {
         setTimeout(() => {
-          barOneStyle.backgroundColor = color;
-          barTwoStyle.backgroundColor = color;
           barOneStyle.height = `${barTwoHt}px`;
           barTwoStyle.height = `${barOneHt}px`;
+          barOneStyle.backgroundColor = SECONDARY_COLOR;
+          barTwoStyle.backgroundColor = SECONDARY_COLOR;
+
         }, i * ANIMATION_SPEED_MS)
       }
 
