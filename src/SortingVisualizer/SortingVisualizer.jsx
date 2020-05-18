@@ -3,9 +3,9 @@ import { getMergeSortAnimations } from '../sortingAlgorithms/sortingAlgorithms.j
 import { getBubbleSortAnimations } from '../sortingAlgorithms/BubbleSort'
 import './SortingVisualizer.css';
 import { getSelectionSortAnimations } from '../sortingAlgorithms/SelectionSort.js';
-import { Nav, Navbar } from 'react-bootstrap'
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 
-const ANIMATION_SPEED_MS = 500;
+var ANIMATION_SPEED_MS = 50;
 const NUMBER_OF_ARRAY_BARS = 50;
 //230
 const PRIMARY_COLOR = 'aqua';
@@ -32,28 +32,50 @@ export default class SortingVisualizer extends React.Component {
     }
     this.setState({ array });
   }
+  setAnimSpeed(speed) {
+    if (speed === 'slow')
+      ANIMATION_SPEED_MS = 400;
+    else if (speed === 'normal')
+      ANIMATION_SPEED_MS = 50;
+    else
+      ANIMATION_SPEED_MS = 10;
+  }
 
   render() {
     const { array } = this.state;
     return (
       <div className="container-fluid ">
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="dark" variant="dark" expand="lg">
           <Navbar.Brand href="#home">Sorting Algorithms Visualizer</Navbar.Brand>
-          <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-          </Nav>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+              <Nav.Link href="#home">Home</Nav.Link>
+              <Nav.Link href="#link">Link</Nav.Link>
+              <NavDropdown title="Animation Speed" id="basic-nav-dropdown">
+                <NavDropdown.Item onClick={() => { this.setAnimSpeed('slow') }} href="#speed:Slow">Slow</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => { this.setAnimSpeed('normal') }} href="#speed:Normal">Normal</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => { this.setAnimSpeed('fast') }} href="#speed:Fast">Fast</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+
+          </Navbar.Collapse>
         </Navbar>
         <div className="array-container ">
           {array.map((value, idx) => (
-            <div className="array-bar" key={idx}
-              style={{
-                backgroundColor: PRIMARY_COLOR,
-                height: `${value}px`
-              }}
-            ></div>
+
+            <div className="array-bar-container" key={idx}>
+
+              <div className="array-bar" key={idx}
+                style={{
+                  backgroundColor: PRIMARY_COLOR,
+                  height: `${value}px`
+                }}
+              ></div>
+
+            </div>
           ))}
+
           <div className="container row">
             <button className="btn-info col-md-2" onClick={() => { this.resetArray() }}>Generate Array</button>
             <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.mergeSort()}>Merge Sort</button>
@@ -113,6 +135,9 @@ export default class SortingVisualizer extends React.Component {
 
       if (i % 2 !== 0) {
         setTimeout(() => {
+          // barTwoStyle.width = `20px`;
+          // barOneStyle.transform = 'translate(-5px, 0px)';
+          // barTwoStyle.transform = 'translate(5px, 0px)';
           barOneStyle.backgroundColor = PRIMARY_COLOR;
           barTwoStyle.backgroundColor = PRIMARY_COLOR;
         }, i * ANIMATION_SPEED_MS)
@@ -125,6 +150,9 @@ export default class SortingVisualizer extends React.Component {
       }
       else if (isSwap === 1) {
         setTimeout(() => {
+          // barOneStyle.transform = 'translate(5px, 0px)';
+          // barTwoStyle.transform = 'translate(-5px, 0px)';
+          // barTwoStyle.width = `15px`;
           barOneStyle.height = `${barTwoHt}px`;
           barTwoStyle.height = `${barOneHt}px`;
           barOneStyle.backgroundColor = SECONDARY_COLOR;
