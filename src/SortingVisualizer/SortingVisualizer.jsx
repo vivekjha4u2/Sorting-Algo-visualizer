@@ -96,25 +96,67 @@ export default class SortingVisualizer extends React.Component {
 
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
-      const [barOneIdx, barOneHt, barTwoHt] = animations[i];
-      const barOneStyle = arrayBars[barOneIdx].style;
-      const barTwoStyle = arrayBars[i].style;
-      for (let j = i + 1; j < animations.length; j++) {
-        setTimeout(() => {
-          arrayBars[j].style.backgroundColor = 'red'
-        }, i * ANIMATION_SPEED_MS)
-        setTimeout(() => {
-          arrayBars[j].style.backgroundColor = 'aqua'
-        }, i * ANIMATION_SPEED_MS)
+
+      if (animations[i].length === 1) {
+        const [barJIndex] = animations[i];
+        const barJStyle = arrayBars[barJIndex].style;
+        if (i % 2 === 0) {
+          setTimeout(() => {
+            barJStyle.backgroundColor = 'yellow';
+          }, i * ANIMATION_SPEED_MS)
+        }
+        else {
+          setTimeout(() => {
+            barJStyle.backgroundColor = PRIMARY_COLOR;
+          }, i * ANIMATION_SPEED_MS)
+        }
       }
-      setTimeout(() => {
-        // barOneStyle.borderWidth = '1px';
-        // barOneStyle.backgroundColor = 'red';
-        barOneStyle.height = `${barTwoHt}px`;
-        barTwoStyle.height = `${barOneHt}px`;
-        arrayBars[i].style.backgroundColor = "red";
-        // barOneStyle.backgroundColor = "aqua";
-      }, i * ANIMATION_SPEED_MS)
+      else {
+        const [barOneIdx, barTwoIdx, barOneHt, barTwoHt] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+
+        if (i % 2 === 0) {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = SECONDARY_COLOR;
+            barTwoStyle.backgroundColor = SECONDARY_COLOR;
+
+            console.log("barOneStyle.height before->" + barOneStyle.height + "### " + "barTwoStyle.height before->" + barTwoStyle.height);
+            barOneStyle.height = `${barTwoHt}px`;
+            barTwoStyle.height = `${barOneHt}px`;
+            console.log("barOneStyle.height after->" + barOneStyle.height + "### " + "barTwoStyle.height after->" + barTwoStyle.height);
+
+          }, i * ANIMATION_SPEED_MS)
+        }
+        else {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = PRIMARY_COLOR;
+            barTwoStyle.backgroundColor = PRIMARY_COLOR;
+          }, i * ANIMATION_SPEED_MS)
+        }
+      }
+
+
+
+
+      // const barOneStyle = arrayBars[barOneIdx].style;
+      // const barTwoStyle = arrayBars[i].style;
+      // for (let j = i + 1; j < animations.length; j++) {
+      //   setTimeout(() => {
+      //     arrayBars[j].style.backgroundColor = 'red'
+      //   }, i * ANIMATION_SPEED_MS)
+      //   setTimeout(() => {
+      //     arrayBars[j].style.backgroundColor = 'aqua'
+      //   }, i * ANIMATION_SPEED_MS)
+      // }
+      // setTimeout(() => {
+      //   // barOneStyle.borderWidth = '1px';
+      //   // barOneStyle.backgroundColor = 'red';
+      //   barOneStyle.height = `${barTwoHt}px`;
+      //   barTwoStyle.height = `${barOneHt}px`;
+      //   arrayBars[i].style.backgroundColor = "red";
+      //   // barOneStyle.backgroundColor = "aqua";
+      // }, i * ANIMATION_SPEED_MS)
     }
 
   }
