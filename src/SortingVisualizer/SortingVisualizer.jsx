@@ -1,8 +1,9 @@
 import React from 'react'
-import { getMergeSortAnimations } from '../sortingAlgorithms/sortingAlgorithms.js'
+import { getMergeSortAnimations } from '../sortingAlgorithms/MergeSort.js'
 import { getBubbleSortAnimations } from '../sortingAlgorithms/BubbleSort'
 import './SortingVisualizer.css';
 import { getSelectionSortAnimations } from '../sortingAlgorithms/SelectionSort.js';
+import { getQuickSortAnimations } from '../sortingAlgorithms/QuickSort.js';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 
 var ANIMATION_SPEED_MS = 50;
@@ -81,7 +82,7 @@ export default class SortingVisualizer extends React.Component {
             <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.mergeSort()}>Merge Sort</button>
             <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.bubbleSort()}>Bubble Sort</button>
             <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.selectionSort()}>Selection Sort</button>
-            <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.selectionSort()}>Quick Sort</button>
+            <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.quickSort()}>Quick Sort</button>
             <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.selectionSort()}>Heap Sort</button>
           </div>
         </div>
@@ -98,16 +99,19 @@ export default class SortingVisualizer extends React.Component {
       const arrayBars = document.getElementsByClassName('array-bar');
 
       if (animations[i].length === 1) {
-        const [barJIndex] = animations[i];
+        const [barJIndex, barMinIndex] = animations[i];
         const barJStyle = arrayBars[barJIndex].style;
+        const barMinStyle = arrayBars[barMinIndex].style;
         if (i % 2 === 0) {
           setTimeout(() => {
             barJStyle.backgroundColor = 'yellow';
+            barMinStyle.backgroundColor = 'black';
           }, i * ANIMATION_SPEED_MS)
         }
         else {
           setTimeout(() => {
             barJStyle.backgroundColor = PRIMARY_COLOR;
+            barMinStyle.backgroundColor = PRIMARY_COLOR;
           }, i * ANIMATION_SPEED_MS)
         }
       }
@@ -221,7 +225,7 @@ export default class SortingVisualizer extends React.Component {
 
   mergeSort() {
     const animations = getMergeSortAnimations(this.state.array);
-    console.log(animations);
+    // console.log(animations);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
       const isColorChange = i % 3 !== 2;
@@ -244,11 +248,77 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
+  quickSort() {
+    const animations = getQuickSortAnimations(this.state.array);
+    console.log(animations);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+
+      //partition k liye (low or i) ko aage badhana aur (high or j) ko peeche lana
+      //i aur j ka color change k liye 4 if else... 
+      //lowOrHigh is 0 -> i ka color change k liye... AND viceversa
+      if (animations[i].length === 3) {
+        const [barOneIdx, pivotBarIdx, lowOrHigh] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const pivotBarStyle = arrayBars[pivotBarIdx].style;
+        if (lowOrHigh === 0 && i % 2 === 0) {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = SECONDARY_COLOR;
+            pivotBarStyle.backgroundColor = 'black';
+          }, i * ANIMATION_SPEED_MS)
+        }
+        else if (lowOrHigh === 0 && i % 2 !== 0) {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = PRIMARY_COLOR;
+            pivotBarStyle.backgroundColor = PRIMARY_COLOR;
+          }, i * ANIMATION_SPEED_MS)
+        }
+        else if (lowOrHigh === 1 && i % 2 === 0) {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = 'green';
+            pivotBarStyle.backgroundColor = 'black';
+          }, i * ANIMATION_SPEED_MS)
+        }
+        else if (lowOrHigh === 1 && i % 2 !== 0) {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = PRIMARY_COLOR;
+            pivotBarStyle.backgroundColor = PRIMARY_COLOR;
+          }, i * ANIMATION_SPEED_MS)
+        }
+      }
+      //swap k liye 4 element push huye h animations me
+      //animations[i].length === 4
+      else {
+        const [barOneIdx, barTwoIdx, barOneHt, barTwoHt] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+
+        if (i % 2 === 0) {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = 'yellow';
+            barTwoStyle.backgroundColor = 'yellow';
+            barOneStyle.height = `${barTwoHt}px`;
+            barTwoStyle.height = `${barOneHt}px`;
+          }, i * ANIMATION_SPEED_MS)
+        }
+        else {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = PRIMARY_COLOR;
+            barTwoStyle.backgroundColor = PRIMARY_COLOR;
+          }, i * ANIMATION_SPEED_MS)
+        }
+
+      }
+
+
+    }
+  }
 }
 function randomIntFromInterval(min, max) {
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
 
 
 

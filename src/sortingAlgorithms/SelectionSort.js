@@ -13,8 +13,8 @@ function selectionSortHelper(array, animations) {
 
         for (let j = i + 1; j < array.length; j++) {
             if (array[j] < array[minIndex]) minIndex = j;
-            animations.push([j]);
-            animations.push([j]);
+            animations.push([j, minIndex]);
+            animations.push([j, minIndex]);
         }
 
         let temp = array[minIndex];
