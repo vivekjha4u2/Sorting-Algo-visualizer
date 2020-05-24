@@ -28,7 +28,7 @@ function partition(array, low, high, animations) {
 
         // If two pointers met. 
         if (i >= j) {
-            // animations.push([i,j])
+            animations.push([j]);
             return j;
         }
         let temp = array[i];

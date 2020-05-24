@@ -5,6 +5,7 @@ import './SortingVisualizer.css';
 import { getSelectionSortAnimations } from '../sortingAlgorithms/SelectionSort.js';
 import { getQuickSortAnimations } from '../sortingAlgorithms/QuickSort.js';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import Description from './Description.js'
 
 var ANIMATION_SPEED_MS = 50;
 const NUMBER_OF_ARRAY_BARS = 50;
@@ -18,6 +19,14 @@ export default class SortingVisualizer extends React.Component {
     this.state = {
       array: [],
       isAlgoRunning: false,
+
+      //to show description ..onclick of an algo we change State vars to specific algo.
+      heading: "",
+      desc: "",
+      wt: "",
+      avgt: "",
+      bt: "",
+      ws: ""
     };
   }
 
@@ -86,12 +95,33 @@ export default class SortingVisualizer extends React.Component {
             <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.selectionSort()}>Heap Sort</button>
           </div>
         </div>
+
+        <Description heading={this.state.heading}
+          desc={this.state.desc}
+          wt={this.state.wt} avgt={this.state.avgt} bt={this.state.bt} ws={this.state.ws}
+        />
       </div>
     )
   }
 
   selectionSort() {
-    this.setState({ isAlgoRunning: true })
+    // this.setState({ isAlgoRunning: true })
+    // this.setState({
+    //   heading: "SELECTION SORT",
+    //   desc: `The selection sort algorithm sorts an array by repeatedly finding
+    //  the minimum element (considering ascending order) from unsorted part and 
+    //   putting it at the beginning. The algorithm maintains two subarrays in 
+    //    a given array. 
+
+    // 1) The subarray which is already sorted. 
+    // 2) Remaining subarray which is unsorted. 
+
+    // In every iteration of selection sort, the minimum element 
+    //  (considering ascending order) from the unsorted subarray is  
+    //  picked and moved to the sorted subarray.`,
+
+    //   wt: "O(N^2)", avgt: "O(N^2)", bt: "O(N^2)", ws: "O(1)"
+    // });
 
     const animations = getSelectionSortAnimations(this.state.array);
 
@@ -163,9 +193,23 @@ export default class SortingVisualizer extends React.Component {
       // }, i * ANIMATION_SPEED_MS)
     }
 
+
+
   }
 
   bubbleSort() {
+    // this.setState({
+    //   heading: "BUBBLE SORT",
+    //   desc: `Bubble sort, sometimes referred to as sinking sort, is a simple
+    //    sorting algorithm that repeatedly steps through the list, compares
+    //     adjacent elements and swaps them if they are in the wrong order. 
+    //     The pass through the list is repeated until the list is sorted.
+    //      The algorithm, which is a comparison sort, is named for the way 
+    //      smaller or larger elements "bubble" to the top of the list`,
+
+    //   wt: "O(N^2)", avgt: "O(N^2)", bt: "O(N)", ws: "O(1)"
+    // });
+
     const animations = getBubbleSortAnimations(this.state.array);
 
     for (let i = 0; i < animations.length; i++) {
@@ -224,6 +268,19 @@ export default class SortingVisualizer extends React.Component {
   }
 
   mergeSort() {
+    this.setState({
+      heading: "MERGE SORT",
+      desc: `In computer science, merge sort (also commonly spelled mergesort)
+       is an efficient, general-purpose, comparison-based sorting algorithm.
+        Most implementations produce a stable sort, which means that the order
+         of equal elements is the same in the input and output. Merge sort is
+          a divide and conquer algorithm that was invented by John von
+           Neumann in 1945.`,
+
+      wt: "O(N(logN))", avgt: "O(N(logN))", bt: "O(N(logN))", ws: "O(N)"
+    });
+
+
     const animations = getMergeSortAnimations(this.state.array);
     // console.log(animations);
     for (let i = 0; i < animations.length; i++) {
@@ -249,15 +306,42 @@ export default class SortingVisualizer extends React.Component {
   }
 
   quickSort() {
+    this.setState({
+      heading: "QUICK SORT",
+      desc: `Quicksort (sometimes called partition-exchange sort) is an
+       efficient sorting algorithm. Developed by British computer scientist
+        Tony Hoare in 1959[1] and published in 1961,[2] it is still a commonly
+         used algorithm for sorting. When implemented well, it can be about two
+          or three times faster than its main competitors, merge sort and
+           heapsort.[3][contradictory]
+
+      Quicksort is a divide-and-conquer algorithm. It works by selecting a 'pivot'
+       element from the array and partitioning the other elements into two 
+       sub-arrays, according to whether they are less than or greater than
+        the pivot. The sub-arrays are then sorted recursively. This can be
+         done in-place, requiring small additional amounts of memory to perform
+          the sorting.`,
+
+      wt: "O(N^2)", avgt: "O(N(logN))", bt: "O(N(logN))", ws: "O(logN)"
+    });
+
     const animations = getQuickSortAnimations(this.state.array);
     console.log(animations);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
 
+      if (animations[i].length === 1) {
+        const [barOneIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = 'purple';
+        }, i * ANIMATION_SPEED_MS)
+      }
+
       //partition k liye (low or i) ko aage badhana aur (high or j) ko peeche lana
       //i aur j ka color change k liye 4 if else... 
       //lowOrHigh is 0 -> i ka color change k liye... AND viceversa
-      if (animations[i].length === 3) {
+      else if (animations[i].length === 3) {
         const [barOneIdx, pivotBarIdx, lowOrHigh] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const pivotBarStyle = arrayBars[pivotBarIdx].style;
