@@ -16,11 +16,11 @@ function selectionSortHelper(array, animations) {
             animations.push([j, minIndex]);
             animations.push([j, minIndex]);
         }
-
+        animations.push([minIndex, i, array[minIndex], array[i]]);
         let temp = array[minIndex];
         array[minIndex] = array[i];
         array[i] = temp;
-        animations.push([minIndex, i, array[minIndex], array[i]]);
+
         animations.push([minIndex, i, array[minIndex], array[i]]);
 
 

@@ -128,7 +128,7 @@ export default class SortingVisualizer extends React.Component {
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
 
-      if (animations[i].length === 1) {
+      if (animations[i].length === 2) {
         const [barJIndex, barMinIndex] = animations[i];
         const barJStyle = arrayBars[barJIndex].style;
         const barMinStyle = arrayBars[barMinIndex].style;
@@ -155,10 +155,10 @@ export default class SortingVisualizer extends React.Component {
             barOneStyle.backgroundColor = SECONDARY_COLOR;
             barTwoStyle.backgroundColor = SECONDARY_COLOR;
 
-            console.log("barOneStyle.height before->" + barOneStyle.height + "### " + "barTwoStyle.height before->" + barTwoStyle.height);
+            // console.log("barOneStyle.height before->" + barOneStyle.height + "### " + "barTwoStyle.height before->" + barTwoStyle.height);
             barOneStyle.height = `${barTwoHt}px`;
             barTwoStyle.height = `${barOneHt}px`;
-            console.log("barOneStyle.height after->" + barOneStyle.height + "### " + "barTwoStyle.height after->" + barTwoStyle.height);
+            // console.log("barOneStyle.height after->" + barOneStyle.height + "### " + "barTwoStyle.height after->" + barTwoStyle.height);
 
           }, i * ANIMATION_SPEED_MS)
         }
@@ -169,32 +169,7 @@ export default class SortingVisualizer extends React.Component {
           }, i * ANIMATION_SPEED_MS)
         }
       }
-
-
-
-
-      // const barOneStyle = arrayBars[barOneIdx].style;
-      // const barTwoStyle = arrayBars[i].style;
-      // for (let j = i + 1; j < animations.length; j++) {
-      //   setTimeout(() => {
-      //     arrayBars[j].style.backgroundColor = 'red'
-      //   }, i * ANIMATION_SPEED_MS)
-      //   setTimeout(() => {
-      //     arrayBars[j].style.backgroundColor = 'aqua'
-      //   }, i * ANIMATION_SPEED_MS)
-      // }
-      // setTimeout(() => {
-      //   // barOneStyle.borderWidth = '1px';
-      //   // barOneStyle.backgroundColor = 'red';
-      //   barOneStyle.height = `${barTwoHt}px`;
-      //   barTwoStyle.height = `${barOneHt}px`;
-      //   arrayBars[i].style.backgroundColor = "red";
-      //   // barOneStyle.backgroundColor = "aqua";
-      // }, i * ANIMATION_SPEED_MS)
     }
-
-
-
   }
 
   bubbleSort() {
