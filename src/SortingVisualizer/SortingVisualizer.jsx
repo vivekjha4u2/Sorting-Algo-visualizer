@@ -8,7 +8,7 @@ import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import Description from './Description.js'
 
 var ANIMATION_SPEED_MS = 50;
-// var NUMBER_OF_ARRAY_BARS = 50;
+var NUMBER_OF_ARRAY_BARS = 50;
 //230
 const PRIMARY_COLOR = 'aqua';
 const SECONDARY_COLOR = 'red';
@@ -20,7 +20,7 @@ export default class SortingVisualizer extends React.Component {
       array: [],
       isAlgoRunning: false,
       arraySizeValue: 'large',
-      NUMBER_OF_ARRAY_BARS: 50,
+      // NUMBER_OF_ARRAY_BARS: 50,
 
       //to show description ..onclick of an algo we change State vars to specific algo.
       heading: "",
@@ -38,14 +38,15 @@ export default class SortingVisualizer extends React.Component {
   }
 
   changeArraySize = (event) => {
+    //to make this responsive for mobile devices-> divide screen width by width of 
+    //array-bar to get the NUMBER_OF_ARRAY_BARS
     this.setState({ arraySizeValue: event.target.value });
-    // console.log(event.target.value)
+    // console.log("event.target.value", event.target.value)
     //trying to get the width of arraybar
 
-    if (this.state.arraySizeValue === 'small') {
-      console.log(this.state.arraySizeValue)
-      this.setState({ NUMBER_OF_ARRAY_BARS: 15 });
-      // this.resetArray();
+    if (event.target.value === 'small') {
+      NUMBER_OF_ARRAY_BARS = 15
+      this.resetArray();
       for (let i = 0; i < this.state.array.length; i++) {
         const arrayBars = document.getElementsByClassName('array-bar');
         arrayBars[i].style.width = '70px'
@@ -54,32 +55,29 @@ export default class SortingVisualizer extends React.Component {
 
     }
     else if (event.target.value === 'medium') {
-      console.log(this.state.arraySizeValue)
-      this.setState({ NUMBER_OF_ARRAY_BARS: 30 });
-      // this.resetArray();
+      // console.log(this.state.arraySizeValue)   this shows wrong ..dont know why
+      NUMBER_OF_ARRAY_BARS = 26
+      this.resetArray();
       for (let i = 0; i < this.state.array.length; i++) {
         const arrayBars = document.getElementsByClassName('array-bar');
         arrayBars[i].style.width = '40px'
-        // console.log(i)
       }
-      console.log(this.state.array.length)
     }
-    else if (this.state.arraySizeValue === 'large') {
-      console.log(this.state.arraySizeValue)
-      this.setState({ NUMBER_OF_ARRAY_BARS: 50 });
+    else if (event.target.value === 'large') {
+      // this.setState({ NUMBER_OF_ARRAY_BARS: 50 });
+      // console.log(this.state.NUMBER_OF_ARRAY_BARS)
+      NUMBER_OF_ARRAY_BARS = 50
       this.resetArray();
       for (let i = 0; i < this.state.array.length; i++) {
         const arrayBars = document.getElementsByClassName('array-bar');
         arrayBars[i].style.width = '20px'
-        // console.log(i)
       }
-      console.log(this.state.array.length)
     }
   }
 
   resetArray() {
     const array = [];
-    for (let i = 0; i < this.state.NUMBER_OF_ARRAY_BARS; i++) {
+    for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
       array.push(randomIntFromInterval(5, 500));
     }
     this.setState({ array });
