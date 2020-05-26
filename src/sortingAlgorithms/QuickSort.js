@@ -29,14 +29,16 @@ function partition(array, low, high, animations) {
         // If two pointers met. 
         if (i >= j) {
             animations.push([j]);
+            animations.push([j]);
             return j;
         }
+        animations.push([i, j, array[i], array[j]]);
         let temp = array[i];
         array[i] = array[j];
         array[j] = temp;
         //swap(arr[i], arr[j]); 
 
-        animations.push([i, j, array[i], array[j]]);
+
         animations.push([i, j, array[i], array[j]]);
     }
 }

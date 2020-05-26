@@ -1,5 +1,7 @@
 .array-container {
   position: relative;
+  /* height:auto;
+  width:auto; */
   /* left: 100px; */
   /* top: 100px; */
 }

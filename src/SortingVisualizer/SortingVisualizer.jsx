@@ -243,17 +243,17 @@ export default class SortingVisualizer extends React.Component {
   }
 
   mergeSort() {
-    this.setState({
-      heading: "MERGE SORT",
-      desc: `In computer science, merge sort (also commonly spelled mergesort)
-       is an efficient, general-purpose, comparison-based sorting algorithm.
-        Most implementations produce a stable sort, which means that the order
-         of equal elements is the same in the input and output. Merge sort is
-          a divide and conquer algorithm that was invented by John von
-           Neumann in 1945.`,
+    // this.setState({
+    //   heading: "MERGE SORT",
+    //   desc: `In computer science, merge sort (also commonly spelled mergesort)
+    //    is an efficient, general-purpose, comparison-based sorting algorithm.
+    //     Most implementations produce a stable sort, which means that the order
+    //      of equal elements is the same in the input and output. Merge sort is
+    //       a divide and conquer algorithm that was invented by John von
+    //        Neumann in 1945.`,
 
-      wt: "O(N(logN))", avgt: "O(N(logN))", bt: "O(N(logN))", ws: "O(N)"
-    });
+    //   wt: "O(N(logN))", avgt: "O(N(logN))", bt: "O(N(logN))", ws: "O(N)"
+    // });
 
 
     const animations = getMergeSortAnimations(this.state.array);
@@ -281,24 +281,24 @@ export default class SortingVisualizer extends React.Component {
   }
 
   quickSort() {
-    this.setState({
-      heading: "QUICK SORT",
-      desc: `Quicksort (sometimes called partition-exchange sort) is an
-       efficient sorting algorithm. Developed by British computer scientist
-        Tony Hoare in 1959[1] and published in 1961,[2] it is still a commonly
-         used algorithm for sorting. When implemented well, it can be about two
-          or three times faster than its main competitors, merge sort and
-           heapsort.[3][contradictory]
+    // this.setState({
+    //   heading: "QUICK SORT",
+    //   desc: `Quicksort (sometimes called partition-exchange sort) is an
+    //    efficient sorting algorithm. Developed by British computer scientist
+    //     Tony Hoare in 1959[1] and published in 1961,[2] it is still a commonly
+    //      used algorithm for sorting. When implemented well, it can be about two
+    //       or three times faster than its main competitors, merge sort and
+    //        heapsort.[3][contradictory]
 
-      Quicksort is a divide-and-conquer algorithm. It works by selecting a 'pivot'
-       element from the array and partitioning the other elements into two 
-       sub-arrays, according to whether they are less than or greater than
-        the pivot. The sub-arrays are then sorted recursively. This can be
-         done in-place, requiring small additional amounts of memory to perform
-          the sorting.`,
+    //   Quicksort is a divide-and-conquer algorithm. It works by selecting a 'pivot'
+    //    element from the array and partitioning the other elements into two 
+    //    sub-arrays, according to whether they are less than or greater than
+    //     the pivot. The sub-arrays are then sorted recursively. This can be
+    //      done in-place, requiring small additional amounts of memory to perform
+    //       the sorting.`,
 
-      wt: "O(N^2)", avgt: "O(N(logN))", bt: "O(N(logN))", ws: "O(logN)"
-    });
+    //   wt: "O(N^2)", avgt: "O(N(logN))", bt: "O(N(logN))", ws: "O(logN)"
+    // });
 
     const animations = getQuickSortAnimations(this.state.array);
     console.log(animations);
@@ -306,11 +306,18 @@ export default class SortingVisualizer extends React.Component {
       const arrayBars = document.getElementsByClassName('array-bar');
 
       if (animations[i].length === 1) {
+
         const [barOneIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
-        setTimeout(() => {
-          barOneStyle.backgroundColor = 'purple';
-        }, i * ANIMATION_SPEED_MS)
+        if (i % 2 === 0) {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = 'purple';
+          }, i * ANIMATION_SPEED_MS)
+        } else {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = PRIMARY_COLOR;
+          }, i * ANIMATION_SPEED_MS)
+        }
       }
 
       //partition k liye (low or i) ko aage badhana aur (high or j) ko peeche lana
