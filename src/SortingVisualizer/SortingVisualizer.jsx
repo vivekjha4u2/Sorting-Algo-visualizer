@@ -8,7 +8,7 @@ import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import Description from './Description.js'
 
 var ANIMATION_SPEED_MS = 50;
-const NUMBER_OF_ARRAY_BARS = 50;
+// var NUMBER_OF_ARRAY_BARS = 50;
 //230
 const PRIMARY_COLOR = 'aqua';
 const SECONDARY_COLOR = 'red';
@@ -19,6 +19,8 @@ export default class SortingVisualizer extends React.Component {
     this.state = {
       array: [],
       isAlgoRunning: false,
+      arraySizeValue: 'large',
+      NUMBER_OF_ARRAY_BARS: 50,
 
       //to show description ..onclick of an algo we change State vars to specific algo.
       heading: "",
@@ -35,9 +37,49 @@ export default class SortingVisualizer extends React.Component {
     this.setState({ isAlgoRunning: true });
   }
 
+  changeArraySize = (event) => {
+    this.setState({ arraySizeValue: event.target.value });
+    // console.log(event.target.value)
+    //trying to get the width of arraybar
+
+    if (this.state.arraySizeValue === 'small') {
+      console.log(this.state.arraySizeValue)
+      this.setState({ NUMBER_OF_ARRAY_BARS: 15 });
+      // this.resetArray();
+      for (let i = 0; i < this.state.array.length; i++) {
+        const arrayBars = document.getElementsByClassName('array-bar');
+        arrayBars[i].style.width = '70px'
+      }
+      console.log(this.state.array.length)
+
+    }
+    else if (event.target.value === 'medium') {
+      console.log(this.state.arraySizeValue)
+      this.setState({ NUMBER_OF_ARRAY_BARS: 30 });
+      // this.resetArray();
+      for (let i = 0; i < this.state.array.length; i++) {
+        const arrayBars = document.getElementsByClassName('array-bar');
+        arrayBars[i].style.width = '40px'
+        // console.log(i)
+      }
+      console.log(this.state.array.length)
+    }
+    else if (this.state.arraySizeValue === 'large') {
+      console.log(this.state.arraySizeValue)
+      this.setState({ NUMBER_OF_ARRAY_BARS: 50 });
+      this.resetArray();
+      for (let i = 0; i < this.state.array.length; i++) {
+        const arrayBars = document.getElementsByClassName('array-bar');
+        arrayBars[i].style.width = '20px'
+        // console.log(i)
+      }
+      console.log(this.state.array.length)
+    }
+  }
+
   resetArray() {
     const array = [];
-    for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
+    for (let i = 0; i < this.state.NUMBER_OF_ARRAY_BARS; i++) {
       array.push(randomIntFromInterval(5, 500));
     }
     this.setState({ array });
@@ -63,27 +105,37 @@ export default class SortingVisualizer extends React.Component {
               <Nav.Link href="#home">Home</Nav.Link>
               <Nav.Link href="#link">Link</Nav.Link>
               <NavDropdown title="Animation Speed" id="basic-nav-dropdown">
-                <NavDropdown.Item onClick={() => { this.setAnimSpeed('slow') }} href="#speed:Slow">Slow</NavDropdown.Item>
-                <NavDropdown.Item onClick={() => { this.setAnimSpeed('normal') }} href="#speed:Normal">Normal</NavDropdown.Item>
-                <NavDropdown.Item onClick={() => { this.setAnimSpeed('fast') }} href="#speed:Fast">Fast</NavDropdown.Item>
+                <NavDropdown.Item value="slow" onClick={() => { this.setAnimSpeed('slow') }} href="#speed:Slow">Slow</NavDropdown.Item>
+                <NavDropdown.Item value="normal" onClick={() => { this.setAnimSpeed('normal') }} href="#speed:Normal">Normal</NavDropdown.Item>
+                <NavDropdown.Item value="fast" onClick={() => { this.setAnimSpeed('fast') }} href="#speed:Fast">Fast</NavDropdown.Item>
               </NavDropdown>
+
+              <label htmlFor="arraySize">arraySize:</label>
+
+              <select name="arraySize" id="arraySize" onChange={this.changeArraySize} value={this.state.arraySizeValue}>
+                <option disabled value="select">Select Size</option>
+                <option value="small">small array</option>
+                <option value="medium">medium array</option>
+                <option value="large">large array</option>
+                <option value="xl">xl array</option>
+              </select>
             </Nav>
 
           </Navbar.Collapse>
         </Navbar>
-        <div className="array-container ">
+        <div className="array-container container">
           {array.map((value, idx) => (
 
-            <div className="array-bar-container" key={idx}>
+            // <div className="array-bar-container" key={idx}>
 
-              <div className="array-bar" key={idx}
-                style={{
-                  backgroundColor: PRIMARY_COLOR,
-                  height: `${value}px`
-                }}
-              ></div>
+            <div className="array-bar" key={idx}
+              style={{
+                backgroundColor: PRIMARY_COLOR,
+                height: `${value}px`
+              }}
+            ></div>
 
-            </div>
+            // </div>
           ))}
 
           <div className="container row">
