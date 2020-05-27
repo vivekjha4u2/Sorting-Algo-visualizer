@@ -20,6 +20,14 @@ export default class SortingVisualizer extends React.Component {
       array: [],
       isAlgoRunning: false,
       arraySizeValue: 'large',
+      algo: {
+        merge: true,
+        bubble: true,
+        selection: true,
+        quick: true,
+        heap: true
+      },
+
       // NUMBER_OF_ARRAY_BARS: 50,
 
       //to show description ..onclick of an algo we change State vars to specific algo.
@@ -138,11 +146,11 @@ export default class SortingVisualizer extends React.Component {
 
           <div className="container row">
             <button className="btn-info col-md-2" onClick={() => { this.resetArray() }}>Generate Array</button>
-            <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.mergeSort()}>Merge Sort</button>
-            <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.bubbleSort()}>Bubble Sort</button>
-            <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.selectionSort()}>Selection Sort</button>
-            <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.quickSort()}>Quick Sort</button>
-            <button className="btn-primary col-md-2" disabled={!this.state.isAlgoRunning} onClick={() => this.selectionSort()}>Heap Sort</button>
+            <button className="btn-primary col-md-2" disabled={!this.state.algo.merge} onClick={() => this.mergeSort()}>Merge Sort</button>
+            <button className="btn-primary col-md-2" disabled={!this.state.algo.bubble} onClick={() => this.bubbleSort()}>Bubble Sort</button>
+            <button className="btn-primary col-md-2" disabled={!this.state.algo.selection} onClick={() => this.selectionSort()}>Selection Sort</button>
+            <button className="btn-primary col-md-2" disabled={!this.state.algo.quick} onClick={() => this.quickSort()}>Quick Sort</button>
+            <button className="btn-primary col-md-2" disabled={!this.state.algo.heap} onClick={() => this.selectionSort()}>Heap Sort</button>
           </div>
         </div>
 
@@ -154,28 +162,78 @@ export default class SortingVisualizer extends React.Component {
     )
   }
 
+  disable(s) {
+    console.log(s);
+    const al = this.state.algo;
+    console.log(al)
+    console.log(al["bubble"])
+    if (s == "bubble") {
+      al["merge"] = false;
+      al["selection"] = false;
+      al["heap"] = false;
+      al["quick"] = false
+
+    }
+    else if (s == "selection") {
+      al["merge"] = false;
+      al["bubble"] = false;
+      al["heap"] = false;
+      al["quick"] = false
+    }
+    else if (s == "quick") {
+      al["merge"] = false;
+      al["bubble"] = false;
+      al["heap"] = false;
+      al["selection"] = false
+    }
+    else if (s == "merge") {
+      al["quick"] = false;
+      al["bubble"] = false;
+      al["heap"] = false;
+      al["selection"] = false
+
+    }
+    console.log(al)
+    this.setState({ algo: al })
+
+  }
+
+  enable() {
+    const al = {
+      merge: true,
+      bubble: true,
+      selection: true,
+      quick: true,
+      heap: true
+    }
+    this.setState({ algo: al })
+  }
+
+
+
   selectionSort() {
     // this.setState({ isAlgoRunning: true })
-    // this.setState({
-    //   heading: "SELECTION SORT",
-    //   desc: `The selection sort algorithm sorts an array by repeatedly finding
-    //  the minimum element (considering ascending order) from unsorted part and 
-    //   putting it at the beginning. The algorithm maintains two subarrays in 
-    //    a given array. 
-
-    // 1) The subarray which is already sorted. 
-    // 2) Remaining subarray which is unsorted. 
-
-    // In every iteration of selection sort, the minimum element 
-    //  (considering ascending order) from the unsorted subarray is  
-    //  picked and moved to the sorted subarray.`,
-
-    //   wt: "O(N^2)", avgt: "O(N^2)", bt: "O(N^2)", ws: "O(1)"
-    // });
-
+    /* this.setState({
+       heading: "SELECTION SORT",
+       desc: `The selection sort algorithm sorts an array by repeatedly finding
+       the minimum element (considering ascending order) from unsorted part and 
+        putting it at the beginning. The algorithm maintains two subarrays in 
+         a given array. 
+ 
+      1) The subarray which is already sorted. 
+      2) Remaining subarray which is unsorted. 
+ 
+      In every iteration of selection sort, the minimum element 
+       (considering ascending order) from the unsorted subarray is  
+       picked and moved to the sorted subarray.`,
+ 
+       wt: "O(N^2)", avgt: "O(N^2)", bt: "O(N^2)", ws: "O(1)"
+     });
+ */
+    this.disable("selection")
     const animations = getSelectionSortAnimations(this.state.array);
-
-    for (let i = 0; i < animations.length; i++) {
+    let i;
+    for (i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
 
       if (animations[i].length === 2) {
@@ -205,7 +263,7 @@ export default class SortingVisualizer extends React.Component {
             barOneStyle.backgroundColor = SECONDARY_COLOR;
             barTwoStyle.backgroundColor = SECONDARY_COLOR;
 
-            // console.log("barOneStyle.height before->" + barOneStyle.height + "### " + "barTwoStyle.height before->" + barTwoStyle.height);
+            console.log("barOneStyle.height before->" + barOneStyle.height + "### " + "barTwoStyle.height before->" + barTwoStyle.height);
             barOneStyle.height = `${barTwoHt}px`;
             barTwoStyle.height = `${barOneHt}px`;
             // console.log("barOneStyle.height after->" + barOneStyle.height + "### " + "barTwoStyle.height after->" + barTwoStyle.height);
@@ -220,6 +278,10 @@ export default class SortingVisualizer extends React.Component {
         }
       }
     }
+    setTimeout(() => {
+      this.enable()
+    }, i * ANIMATION_SPEED_MS);
+
   }
 
   bubbleSort() {
@@ -234,10 +296,10 @@ export default class SortingVisualizer extends React.Component {
 
     //   wt: "O(N^2)", avgt: "O(N^2)", bt: "O(N)", ws: "O(1)"
     // });
-
+    this.disable("bubble")
     const animations = getBubbleSortAnimations(this.state.array);
-
-    for (let i = 0; i < animations.length; i++) {
+    let i;
+    for (i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
       // console.log(i + " " + animations.length);
       const [barOneIdx, barTwoIdx, barOneHt, barTwoHt, isSwap] = animations[i];
@@ -290,6 +352,10 @@ export default class SortingVisualizer extends React.Component {
 
       // }, i * ANIMATION_SPEED_MS)
     }
+    setTimeout(() => {
+      this.enable()
+    }, i * ANIMATION_SPEED_MS);
+
   }
 
   mergeSort() {
@@ -305,10 +371,12 @@ export default class SortingVisualizer extends React.Component {
     //   wt: "O(N(logN))", avgt: "O(N(logN))", bt: "O(N(logN))", ws: "O(N)"
     // });
 
-
+    this.disable("merge");
     const animations = getMergeSortAnimations(this.state.array);
     // console.log(animations);
+    let k = 0;
     for (let i = 0; i < animations.length; i++) {
+      k++;
       const arrayBars = document.getElementsByClassName('array-bar');
       const isColorChange = i % 3 !== 2;
       if (isColorChange) {
@@ -327,7 +395,12 @@ export default class SortingVisualizer extends React.Component {
           barOneStyle.height = `${newHeight}px`;
         }, i * ANIMATION_SPEED_MS);
       }
+
     }
+    setTimeout(() => {
+      this.enable()
+    }, k * ANIMATION_SPEED_MS);
+
   }
 
   quickSort() {
@@ -349,10 +422,11 @@ export default class SortingVisualizer extends React.Component {
 
     //   wt: "O(N^2)", avgt: "O(N(logN))", bt: "O(N(logN))", ws: "O(logN)"
     // });
-
+    this.disable("quick")
     const animations = getQuickSortAnimations(this.state.array);
     console.log(animations);
-    for (let i = 0; i < animations.length; i++) {
+    let i;
+    for (i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
 
       if (animations[i].length === 1) {
@@ -428,6 +502,10 @@ export default class SortingVisualizer extends React.Component {
 
 
     }
+    setTimeout(() => {
+      this.enable()
+    }, i * ANIMATION_SPEED_MS);
+
   }
 }
 function randomIntFromInterval(min, max) {
