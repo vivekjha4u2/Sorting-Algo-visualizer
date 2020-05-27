@@ -205,7 +205,7 @@ export default class SortingVisualizer extends React.Component {
             barOneStyle.backgroundColor = SECONDARY_COLOR;
             barTwoStyle.backgroundColor = SECONDARY_COLOR;
 
-            // console.log("barOneStyle.height before->" + barOneStyle.height + "### " + "barTwoStyle.height before->" + barTwoStyle.height);
+            console.log("barOneStyle.height before->" + barOneStyle.height + "### " + "barTwoStyle.height before->" + barTwoStyle.height);
             barOneStyle.height = `${barTwoHt}px`;
             barTwoStyle.height = `${barOneHt}px`;
             // console.log("barOneStyle.height after->" + barOneStyle.height + "### " + "barTwoStyle.height after->" + barTwoStyle.height);
