@@ -51,7 +51,7 @@ export default class SortingVisualizer extends React.Component {
         const arrayBars = document.getElementsByClassName('array-bar');
         arrayBars[i].style.width = '70px'
       }
-      console.log(this.state.array.length)
+      // console.log(this.state.array.length)
 
     }
     else if (event.target.value === 'medium') {
@@ -73,6 +73,14 @@ export default class SortingVisualizer extends React.Component {
         arrayBars[i].style.width = '20px'
       }
     }
+    // else if (event.target.value === 'xl') {
+    //   NUMBER_OF_ARRAY_BARS = 270
+    //   this.resetArray();
+    //   for (let i = 0; i < this.state.array.length; i++) {
+    //     const arrayBars = document.getElementsByClassName('array-bar');
+    //     arrayBars[i].style.width = '2px'
+    //   }
+    // }
   }
 
   resetArray() {
