@@ -213,23 +213,23 @@ export default class SortingVisualizer extends React.Component {
 
   selectionSort() {
     // this.setState({ isAlgoRunning: true })
-    // this.setState({
-    //   heading: "SELECTION SORT",
-    //   desc: `The selection sort algorithm sorts an array by repeatedly finding
-    //  the minimum element (considering ascending order) from unsorted part and 
-    //   putting it at the beginning. The algorithm maintains two subarrays in 
-    //    a given array. 
-
-    // 1) The subarray which is already sorted. 
-    // 2) Remaining subarray which is unsorted. 
-
-    // In every iteration of selection sort, the minimum element 
-    //  (considering ascending order) from the unsorted subarray is  
-    //  picked and moved to the sorted subarray.`,
-
-    //   wt: "O(N^2)", avgt: "O(N^2)", bt: "O(N^2)", ws: "O(1)"
-    // });
-
+    /* this.setState({
+       heading: "SELECTION SORT",
+       desc: `The selection sort algorithm sorts an array by repeatedly finding
+       the minimum element (considering ascending order) from unsorted part and 
+        putting it at the beginning. The algorithm maintains two subarrays in 
+         a given array. 
+ 
+      1) The subarray which is already sorted. 
+      2) Remaining subarray which is unsorted. 
+ 
+      In every iteration of selection sort, the minimum element 
+       (considering ascending order) from the unsorted subarray is  
+       picked and moved to the sorted subarray.`,
+ 
+       wt: "O(N^2)", avgt: "O(N^2)", bt: "O(N^2)", ws: "O(1)"
+     });
+ */
     this.disable("selection")
     const animations = getSelectionSortAnimations(this.state.array);
     let i;
