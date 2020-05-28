@@ -202,7 +202,7 @@ export default class SortingVisualizer extends React.Component {
 
     }
     console.log(al)
-    this.setState({ algo: al })
+    // this.setState({ algo: al })
 
   }
 
