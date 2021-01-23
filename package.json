@@ -2,7 +2,7 @@
   "name": "sorting-visualizer",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://vivekjha4u2.github.io/Sorting-algo-Visualizer",
+  "homepage": "http://vivekjha4u2.github.io/Sorting-Algo-visualizer",
   "dependencies": {
     "bootstrap": "^4.5.0",
     "gh-pages": "^2.2.0",
